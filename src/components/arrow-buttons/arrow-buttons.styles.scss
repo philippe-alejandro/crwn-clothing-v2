@@ -1,0 +1,14 @@
+.arrow-buttons-container {
+    width: 45px;
+    height: 45px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    .arrow-icon {
+      width: 48px;
+      height: 48px;
+      cursor: pointer;
+    }
+  }

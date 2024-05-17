@@ -8,6 +8,7 @@ import {
   signInAuthUserWithEmailAndPassword,
 } from "../../utils/firebase/firebase.utils";
 import "./sign-in-form.styles.scss";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const defaultFormFields = {
   email: "",
@@ -81,3 +82,59 @@ const SignInForm = () => {
 };
 
 export default SignInForm;
+
+const SignUpFormV2 = () => {
+  const [formFields, setFormFields] = useState(defaultFormFields);
+  const { email, password } = formFields;
+
+  const signInWithGoogle = async () => {
+    const { user } = await signInWithGooglePopUp();
+  };
+
+  const resetFormFields = () => {
+    setFormFields(defaultFormFields);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const { user } = await createUserWithEmailAndPassword(email, password);
+      resetFormFields();
+    } catch(error) {
+      alert(`There is an error signing you in. Check your 
+      credentials are correct. Error: ${error}`);
+    } 
+  };
+
+  const handleChange = (event) => {
+    const {name, value} = event.target;
+    setFormFields({ ...formFields, [name]: value });
+  };
+
+  return (
+    <div className="sign-in-container">
+      <h2>Do you have an account?</h2>
+      <span>Sign in using email and password.</span>
+      <form onSubmit={handleSubmit}>
+        <FormInput
+          label='email'
+          name='email'
+          type='email'
+          value={email}
+          onChangle={handleChange}
+
+        />
+        <FormInput
+          label='email'
+          name='email'
+          type='password'
+          value={email}
+          onChangle={handleChange}
+        />
+        <div className='buttons-container'>
+          <Button type='submit'>Sign In</Button>
+          <Button type='button' buttonType='google' onClick={signInWithGoogle}>Google Sign In</Button>
+        </div>
+      </form>
+    </div>
+  )
+};

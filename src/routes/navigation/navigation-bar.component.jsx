@@ -12,13 +12,11 @@ const NavigationBar = () => {
   const { isCartDisplayed, setIsCartDisplayed } = useContext(CartDropdownContext);
   const { currentUser, setCurrentUser } = useContext(UserContext);
     const signOutHandler = async () => {
-      console.log('execute onClickDropdownHandler');
       await SignOutUser();
       setCurrentUser(null);
     };
     console.log(currentUser);
     const onClickDropdownHandler = () => {
-      console.log('execute onClickDropdownHandler');
       if (isCartDisplayed) {
         setIsCartDisplayed(false);
       } else {
@@ -29,20 +27,20 @@ const NavigationBar = () => {
       <Fragment>
         <div className='navigation'>
             <Link className='logo-container' to='/'>
-                <CrownLogo className='logo' />
+              <CrownLogo className='logo' />
             </Link>
             <div className='nav-links-container'>
-                <Link className='nav-link' to='/shop'>
-                    SHOP
+              <Link className='nav-link' to='/shop'>
+                  SHOP
+              </Link>
+              {currentUser ? (
+                <span className='nav-link' onClick={signOutHandler}>Sign Out</span>
+              ) : (
+                <Link className='nav-link' to='/authentication'>
+                  Sign In
                 </Link>
-                {currentUser ? (
-                  <span className='nav-link' onClick={signOutHandler}>Sign Out</span>
-                ) : (
-                  <Link className='nav-link' to='/authentication'>
-                    Sign In
-                </Link>
-                )}
-                <CartIcon onClick={onClickDropdownHandler}/>
+              )}
+              <CartIcon onClick={onClickDropdownHandler}/>
             </div>
             {isCartDisplayed && <CartDropdown/>}
         </div>

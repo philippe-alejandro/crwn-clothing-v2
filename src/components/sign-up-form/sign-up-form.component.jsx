@@ -7,7 +7,6 @@ import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase.utils";
-import { UserContext } from '../../contexts/user.context.jsx';
 import './sign-up-form.styles.scss';
 
 const defaultFormFields = {
@@ -103,3 +102,4 @@ const SignUpForm = () => {
 };
 
 export default SignUpForm;
+

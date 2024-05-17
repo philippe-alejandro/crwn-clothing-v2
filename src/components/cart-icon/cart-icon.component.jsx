@@ -1,14 +1,15 @@
 import { ReactComponent as ShoppingIcon } from '../../assets/shopping-bag.svg';
 import './cart-icon.styles.scss';
-import { CartContext } from '../../contexts/cart.context';
+import { CartDropdownContext } from '../../contexts/cartDropDown.context';
 import { useContext } from 'react'
 
 const CartIcon = ({ onClick }) => {
-    const { cart } = useContext(CartContext);
+    const { totalProductsInCart } = useContext(CartDropdownContext);
+
     return (
         <div className='cart-icon-container' onClick={onClick}>
             <ShoppingIcon className='shopping-icon'/>
-            <span className='item-count'>{cart ? cart.length : 0}</span>
+            <span className='item-count'>{totalProductsInCart ? totalProductsInCart : 0}</span>
         </div>
     )
 };
