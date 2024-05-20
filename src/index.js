@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { UserProvider } from './contexts/user.context';
 import { CategoriesMapProvider } from './contexts/categoriesMap.context';
-import { CardDropdownProvider } from './contexts/cartDropDown.context';
+import { CartDropdownProvider } from './contexts/cartDropDown.context';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -14,9 +14,9 @@ root.render(
     <BrowserRouter>
       <UserProvider>
         <CategoriesMapProvider>
-          <CardDropdownProvider>
+          <CartDropdownProvider>
             <App />
-          </CardDropdownProvider>
+          </CartDropdownProvider>
         </CategoriesMapProvider>
       </UserProvider>
     </BrowserRouter>

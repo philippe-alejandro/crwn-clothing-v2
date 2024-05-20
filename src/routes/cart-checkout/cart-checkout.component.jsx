@@ -6,35 +6,13 @@ import './cart-checkout.styles.scss';
 import TotalPrice from '../../components/total-price/total-price.component';
 
 const CartCheckout = () => {
-    const { cart, setCart } = useContext(CartDropdownContext);
-    
-    const onClickLeftArrow = (id) => {
-        const cartUpdated = cart.map((item) => {
-            if (item.id === id) {
-                return { ...item, quantity: item.quantity - 1 }
-            }
-            return item;
-        });
-        setCart(cartUpdated);
-    };
+    const { 
+        leftArrowRemoveItem, 
+        rightArrowAddItem, 
+        removeProductTrashIcon,
+        cart
+    } = useContext(CartDropdownContext);
 
-    const onClickRightArrow = (id) => {
-        const cartUpdated = cart.map((item) => {
-            if (item.id === id) {
-                return { ...item, quantity: item.quantity + 1 }
-            }
-            return item;
-        });
-        setCart(cartUpdated);
-    };
-
-    const onClickTrashIcon = (id) => {
-        const cartUpdated = cart.filter((item) => {
-            return item.id !== id;
-        });
-        setCart(cartUpdated.filter((item) => item !== null));
-        console.log('updated Cart:',cart);
-    };
     return (
         <div className='cart-checkout-container'>
             <div className='titles-container'>
@@ -53,13 +31,13 @@ const CartCheckout = () => {
                             <p>{item.name}</p>
                         </div>
                         <div className='paragraphs'>
-                            <ArrowButtons clickLeftArrow={() => onClickLeftArrow(item.id)} clickRightArrow={() => onClickRightArrow(item.id)} item={item}/>
+                            <ArrowButtons clickLeftArrow={() => leftArrowRemoveItem(item.id)} clickRightArrow={() => rightArrowAddItem(item.id)} item={item}/>
                         </div>
                         <div className='paragraphs'>
                             <p>{`$${item.price}`}</p>
                         </div>
                         <div className='paragraphs'>
-                            <div className='trash-icon' onClick={() => {onClickTrashIcon(item.id)}}>
+                            <div className='trash-icon' onClick={() => {removeProductTrashIcon(item.id)}}>
                                 <TrashIcon/>
                             </div>
                         </div>

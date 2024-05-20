@@ -5,17 +5,8 @@ import { ReactComponent as TrashIcon } from '../../assets/trash-icon.svg';
 
 const CartItem = (props) => {
   const { imageUrl, price, name, quantity, id } = props.cartItem;
-  const { cart, setCart } = useContext(CartDropdownContext);
+  const { removeProductTrashIcon } = useContext(CartDropdownContext);
 
-  console.log('cart:', cart.at(0).id);
-  const onClickTrashIcon = () => {
-    console.log('inside onClickTrashIcon');
-    const cartUdated = cart.filter((item) => {
-      return item.id !== id;
-    });
-    console.log('cartUdated:', cartUdated);
-    setCart(cartUdated);
-  };
   return (
     <div className='cart-item-container'>
       <img src={imageUrl} alt={`${name}`} />
@@ -26,7 +17,7 @@ const CartItem = (props) => {
         </span>
       </div>
       <div className='trash-icon-cart-item'>
-        <div className='trash-icon-container' onClick={onClickTrashIcon}>
+        <div className='trash-icon-container' onClick={()=>{removeProductTrashIcon(id)}}>
           <TrashIcon/>
         </div>
       </div>
