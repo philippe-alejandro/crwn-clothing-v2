@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect, useReducer } from 'react';
+import React from 'react';
 
 const addProductToCart = (existingProducts, productToAdd) => {
     // first check if productToAdd already exists in existingProducts

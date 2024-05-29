@@ -1,10 +1,10 @@
+import React from 'react';
 import ProductCard from "../product-card/product-card.component";
 import { Link } from 'react-router-dom';
 import './category-preview.styles.scss';
 
 const CategoryPreview = (props) => {
     const { products, category } = props;
-    console.log(`category-preview: ${JSON.stringify(products)}`);
     return (
         <div className='category-preview-container'>
             <h2>

@@ -1,6 +1,7 @@
 import { ReactComponent as LeftArrow } from '../../assets/arrow-left.svg';
 import { ReactComponent as RightArrow } from '../../assets/arrow-right.svg';
 import './arrow-buttons.styles.scss';
+import React from 'react';
 
 const ArrowButtons = (props) => {
     const {clickLeftArrow, clickRightArrow, item} = props;

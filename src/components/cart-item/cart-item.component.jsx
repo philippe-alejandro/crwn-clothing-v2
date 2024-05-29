@@ -1,6 +1,7 @@
 import './cart-item.styles.scss';
 import { useContext } from 'react';  
 import { CartDropdownContext } from '../../contexts/cartDropDown.context';
+import React from 'react';
 import { ReactComponent as TrashIcon } from '../../assets/trash-icon.svg';
 
 const CartItem = (props) => {

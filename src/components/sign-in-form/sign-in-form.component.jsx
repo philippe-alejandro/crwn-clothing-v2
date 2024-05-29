@@ -1,14 +1,13 @@
 import { useState } from "react";
-
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
-
 import {
   signInWithGooglePopUp,
   signInAuthUserWithEmailAndPassword,
 } from "../../utils/firebase/firebase.utils";
 import "./sign-in-form.styles.scss";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import React from 'react';
 
 const defaultFormFields = {
   email: "",

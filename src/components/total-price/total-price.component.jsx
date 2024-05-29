@@ -1,3 +1,4 @@
+import React from 'react';
 import './total-price.styles.scss';
 
 const TotalPrice = (props) => {

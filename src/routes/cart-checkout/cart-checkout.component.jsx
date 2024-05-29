@@ -4,6 +4,7 @@ import ArrowButtons from '../../components/arrow-buttons/arrow-buttons.component
 import { ReactComponent as TrashIcon } from '../../assets/trash-icon.svg';
 import './cart-checkout.styles.scss';
 import TotalPrice from '../../components/total-price/total-price.component';
+import React from 'react';
 
 const CartCheckout = () => {
     const { 

@@ -1,3 +1,4 @@
+import React from 'react';
 import Button from "../button/button.component";
 import './product-card.styles.scss';
 import { CartDropdownContext } from "../../contexts/cartDropDown.context";
