@@ -1,23 +1,25 @@
 import { Outlet, Link } from 'react-router-dom';
-import { Fragment, useContext } from 'react';
-import { useSelector } from 'react-redux';
+import { Fragment } from 'react';
 import { ReactComponent as CrownLogo } from '../../assets/crown.svg';
 import './navigation-bar.styles.scss';
 import { SignOutUser } from '../../utils/firebase/firebase.utils';
 import CartIcon from '../../components/cart-icon/cart-icon.component';
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component';
 import { selectCurrentUser } from '../../store/user/user.selector';
-import { CartDropdownContext } from '../../contexts/cartDropDown.context';
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectorIsCartDisplayed } from '../../store/cart/cart.selector';
+import { setIsCartIsDisplayed } from '../../store/cart/cart.action';
 
 const NavigationBar = () => {
-  const { isCartDisplayed, setIsCartDisplayed } = useContext(CartDropdownContext);
+  const isCartDisplayed = useSelector(selectorIsCartDisplayed);
   const currentUser = useSelector(selectCurrentUser);
+  const dispatch = useDispatch();
   const onClickDropdownHandler = () => {
     if (isCartDisplayed) {
-      setIsCartDisplayed(false);
+      dispatch(setIsCartIsDisplayed(false));
     } else {
-      setIsCartDisplayed(true);
+      dispatch(setIsCartIsDisplayed(true));
     }
   };
   return (

@@ -1,18 +1,27 @@
-import { useContext } from 'react';
-import { CartDropdownContext } from '../../contexts/cartDropDown.context';
 import ArrowButtons from '../../components/arrow-buttons/arrow-buttons.components';
 import { ReactComponent as TrashIcon } from '../../assets/trash-icon.svg';
 import './cart-checkout.styles.scss';
 import TotalPrice from '../../components/total-price/total-price.component';
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux'; 
+import { selectorCartItems } from '../../store/cart/cart.selector';
+import { leftArrowRemoveItem, rightArrowAddItem, removeProductTrashIcon } from '../../store/cart/cart.action';
 
 const CartCheckout = () => {
-    const { 
-        leftArrowRemoveItem, 
-        rightArrowAddItem, 
-        removeProductTrashIcon,
-        cart
-    } = useContext(CartDropdownContext);
+    const dispatch = useDispatch();
+    const cart = useSelector(selectorCartItems);
+
+    const leftArrowRemove = (items, itemId) => {
+        dispatch(leftArrowRemoveItem(items, itemId));
+    };
+
+    const rightArrowAdd = (items, itemId) => {
+        dispatch(rightArrowAddItem(items, itemId));
+    };
+
+    const removeProduct = (items, itemId) => {
+        dispatch(removeProductTrashIcon(items, itemId));
+    };
 
     return (
         <div className='cart-checkout-container'>
@@ -24,7 +33,6 @@ const CartCheckout = () => {
                 <p>Remove</p>
             </div>
             {cart.map((item) => {
-                console.log(item.url)
                 return (
                     <div className='cart-checkout-item-container' key={item.id}>
                         <img src={item.imageUrl} alt={`${item.name}`}/>
@@ -32,13 +40,13 @@ const CartCheckout = () => {
                             <p>{item.name}</p>
                         </div>
                         <div className='paragraphs'>
-                            <ArrowButtons clickLeftArrow={() => leftArrowRemoveItem(item.id)} clickRightArrow={() => rightArrowAddItem(item.id)} item={item}/>
+                            <ArrowButtons clickLeftArrow={() => leftArrowRemove(cart, item.id)} clickRightArrow={() => rightArrowAdd(cart, item.id)} item={item}/>
                         </div>
                         <div className='paragraphs'>
                             <p>{`$${item.price}`}</p>
                         </div>
                         <div className='paragraphs'>
-                            <div className='trash-icon' onClick={() => {removeProductTrashIcon(item.id)}}>
+                            <div className='trash-icon' onClick={() => {removeProduct(cart, item.id)}}>
                                 <TrashIcon/>
                             </div>
                         </div>

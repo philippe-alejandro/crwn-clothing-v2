@@ -1,31 +1,96 @@
-import { Fragment, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import ProductCard from "./src/components/product-card/product-card.component";
-import { useSelector } from "react-redux";
-import { selectorCategoriesMap } from "./src/store/categories/categories.selector";
+import { useState } from "react";
+import { createContext } from "react";
 
+const addProductToCart = (existingProds, productToAdd) => {
+    // check first if product to add exists in existingProds
+    const productExists = existingProds.find((product) => {
+        return product.id === productToAdd.id;
+    });
 
-const Category = () => {
-    const category = useParams();
-    const categoriesMap = useSelector(selectorCategoriesMap);
-    const [products, setProducts] = useState([]);
+    // if productExists is truthy, increment quantity property by 1
+    if (productExists) {
+        return existingProds.map((product) => {
+            if (product.id === productToAdd.id) {
+                return { ...product, quantity: product.quantity + 1 }
+            }
+            return product;
+        });
+    }
 
-    useEffect(() => {
-        setProducts(categoriesMap[category]);
-    }, [category, categoriesMap]);
-    return (
-        <Fragment>
-            <h2 className="category-title"></h2>
-            <div className="category-container">
-                {products && products.map((product) => {
-                    return (
-                        <ProductCard key={product.id} product={product} />
-                    )
-                })
-                }
-            </div>
-        </Fragment>
-    )
+    return [ ...existingProds, { ...productToAdd, quantity: 1 } ];
 };
 
-export default Category;
+const onClickLeftArrow = (products, id) => {
+    // this should return an array containing the products currently
+    // in the cart. The quantity property of such products should be
+    // decreased by 1 if the product ids match.There the right method to 
+    // use here is map().
+    return products.map((product) => {
+        if (product.id === id && product.quantity > 0) {
+            return { ...product, quantity: product.quantity - 1 };  
+        }
+        return { ...product }
+    })
+};
+
+const onClickRightArrow = (products, id) => {
+    // this should return an array containing the products currently
+    // in the cart. The quantity property of such products should be
+    // increased by 1 if the product ids match.There the right method to 
+    // use here is map().
+    return products.map((product) => {
+        if (product.id === id) {
+            return { ...product, quantity: product.quantity + 1 };  
+        }
+        return { ...product }
+    })
+};
+
+export const CartContext = createContext({
+    cart: [],
+    totalItemsInCart: 0,
+    addItemToCart: () => {},
+    isCartDisplayed: false,
+    setIsCartDisplayed: () => {},
+    leftArrowRemoveItem: () => {},
+    rightArrowAddItem: () => {}
+});
+
+export const CartProvider = ({children}) => {
+    const [isCartDisplayed, setIsCartDisplayed] = useState(false);
+    const [cart, setCart] = useState([]);
+    const [totalItemsInCart, setTotalItemsInCart] = useState(0);
+
+    const addItemToCart = (productToAdd) => {
+        setCart(addProductToCart(cart, productToAdd));
+    };
+
+    const leftArrowRemoveItem = (productToAdd) => {
+        setCart(onClickLeftArrow(cart, productToAdd));
+    };
+
+    const rightArrowAddItem = (productToAdd) => {
+        setCart(onClickRightArrow(cart, productToAdd));
+    };
+
+    useEffect(() => {
+        const newTotalItemsInCart = cart.reduce((total, product) => {
+            return total + product.quantity;
+        }, 0);
+        setTotalItemsInCart(newTotalItemsInCart);
+    }, [cart])
+
+    const value = { 
+        cart,
+        totalItemsInCart,
+        addItemToCart,
+        isCartDisplayed,
+        setIsCartDisplayed,
+        leftArrowRemoveItem,
+        rightArrowAddItem
+     };
+
+    return (
+        <CartContext.Provider value={value}>{children}</CartContext.Provider>
+    )
+};

@@ -1,13 +1,17 @@
 import './cart-item.styles.scss';
-import { useContext } from 'react';  
-import { CartDropdownContext } from '../../contexts/cartDropDown.context';
 import React from 'react';
 import { ReactComponent as TrashIcon } from '../../assets/trash-icon.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeProductTrashIcon } from '../../store/cart/cart.action';
+import { selectorCartItems } from '../../store/cart/cart.selector';
 
 const CartItem = (props) => {
   const { imageUrl, price, name, quantity, id } = props.cartItem;
-  const { removeProductTrashIcon } = useContext(CartDropdownContext);
-
+  const dispatch = useDispatch();
+  const cart = useSelector(selectorCartItems);
+  const removeProduct = (items, id) => {
+    dispatch(removeProductTrashIcon(items, id));
+  };
   return (
     <div className='cart-item-container'>
       <img src={imageUrl} alt={`${name}`} />
@@ -18,7 +22,7 @@ const CartItem = (props) => {
         </span>
       </div>
       <div className='trash-icon-cart-item'>
-        <div className='trash-icon-container' onClick={()=>{removeProductTrashIcon(id)}}>
+        <div className='trash-icon-container' onClick={()=>{removeProduct(cart, id)}}>
           <TrashIcon/>
         </div>
       </div>

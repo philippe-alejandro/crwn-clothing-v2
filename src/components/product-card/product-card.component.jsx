@@ -1,15 +1,17 @@
 import React from 'react';
 import Button from "../button/button.component";
 import './product-card.styles.scss';
-import { CartDropdownContext } from "../../contexts/cartDropDown.context";
-import { useContext } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { addItemToCart } from '../../store/cart/cart.action';
+import { selectorCartItems } from '../../store/cart/cart.selector';
 
 const ProductCard = ({ product }) => {
+    console.log();
     const { price, name, imageUrl } = product;
-    const { addItemToCart } = useContext(CartDropdownContext);
-
+    const dispatch = useDispatch();
+    const cartItems = useSelector(selectorCartItems);
     const onAddProductHandler = () => {
-        addItemToCart(product);
+        dispatch(addItemToCart(cartItems, product));
     };
 
     return  (
@@ -20,8 +22,8 @@ const ProductCard = ({ product }) => {
                 <span className='price'>{`$${price}`}</span>
             </div>
             <Button onClick={onAddProductHandler} buttonType='inverted'>Add to Cart</Button>
-        </div>    
-    ) 
+        </div>
+    )
 };
 
 export default ProductCard;

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.scss';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
@@ -13,9 +13,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <CartDropdownProvider>
           <App />
-        </CartDropdownProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>
